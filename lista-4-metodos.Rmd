@@ -123,7 +123,31 @@ constituicoes_poderes %>%
         axis.title.y = element_text(size = 15))
 ```
 
-# GRÁFICO 5- Poderes por ano constitucional separado por estado
+# GRÁFICO 5 - Índices Legislativo, Executivo e Judiciário por ano constitucional
+
+```{r, echo=TRUE, fig.height=12, fig.width=15}
+library(hrbrthemes) #incluindo outro pacote para temas de gráficos
+library(viridis) #incluindo pacote para outras opçõe de escalas de cores
+
+constituicoes_poderes_grafico5 <- constituicoes_poderes %>% 
+select(constitution_year, abbreviation, imp_l, imp_e, imp_j) %>% #selecionando as variáveis de interesse
+  pivot_longer(cols=3:5, names_to = "indices", values_to = "valores") #pivotando os dados para poder plotar os 3 indices
+ 
+constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, group=indices, color=indices)) + #determinando eixos x, y e as linhas do grafico para cada um dos indices
+  geom_line() + #ordenando as observações a partir do eixo x
+  geom_point() + #inserindo pontos nas linhas do gráfico apra marcar as mudanças
+  facet_wrap(~ abbreviation) + #separando por estado
+  scale_color_viridis(discrete = TRUE, begin=0, end=0.8) + # definindo escala de cores das linhas dos gráficos e ajustando com begin e end para que a paleta de cores fiquem mais fortes e menos suaves
+    theme_classic() + #tema clássico para ficar mais clean
+    labs(title = "Indices por ano constitucional e estado", #determinando os marcadores dos gráficos
+       y = "Valores dos indices", x="Ano da Constituição") +
+     theme(axis.text.x = element_text(size = 8.5),
+        axis.text.y = element_text(size = 12),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 15)) #determinando o tamanho das fontes doslabels
+```
+
+# GRÁFICO 6 - Poderes por ano constitucional separado por estado
 ```{r grafico 5, echo=TRUE, fig.height=12, fig.width=15}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
