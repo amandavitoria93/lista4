@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lista 4: Métodos Quantitativos - IPOL</title>
+  <title>Lista 4 - Métodos Quantitativos IPOL/UnB</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -20,7 +20,7 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Lista 4: Métodos Quantitativos - IPOL',
+                title: 'Lista 4 - Métodos Quantitativos IPOL/UnB',
                         useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
@@ -3113,7 +3113,7 @@ slide:not(.current) .plotly.html-widget{
 
 <body style="opacity: 0">
 
-<slides class="layout-widescreen">
+<slides>
 
   <slide class="title-slide segue nobackground">
         <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
@@ -3143,19 +3143,26 @@ body {
 text-align: justify}
 </style>
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Criação do índice e justificativa teórica</h2></hgroup><article  id="criação-do-índice-e-justificativa-teórica">
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Legendas e justificativa teórica</h2></hgroup><article  id="legendas-e-justificativa-teórica">
 
-</article></slide><slide class=""><hgroup><h2>Criando um índice</h2></hgroup><article  id="criando-um-índice">
+</article></slide><slide class=""><hgroup><h2>Legendas para criação do índice</h2></hgroup><article  id="legendas-para-criação-do-índice">
 
 <p>Legendas do índice para entender a mudança de foco e predominância do texto constitucional ligado a cada uma das categorias</p>
 
 <ul>
+<li>Executive = quantidade de palavras destinada à categoria &ldquo;Executive&rdquo; em cada constituição</li>
+<li>Legislative = quantidade de palavras destinada à categoria &ldquo;Legislative&rdquo; em cada constituição</li>
+<li>Judicial = quantidade de palavras destinada à categoria &ldquo;Judicial&rdquo; em cada constituição</li>
+<li>Poderes = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Legendas para criação do índice</h2></hgroup><article  id="legendas-para-criação-do-índice-1">
+
+<ul>
 <li>IMP = ÍNDICE DE PROPOCIONALIDADE DOS PODERES</li>
-<li>IMP_E = Índice de Proporcionalidade do Poder Executivo</li>
-<li>IMP_L = Índice de Proporcionalidade do Poder Legislativo</li>
-<li>IMP_J = Índice de Proporcionalidade do Poder Judiciário</li>
-<li>executive = quantidade de palavras destinada à categoria &ldquo;Executive&rdquo; em cada constituição</li>
-<li>powers = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição</li>
+<li>IMP_E = Índice de Proporcionalidade do Poder Executivo – imp_e = executive/poderes</li>
+<li>IMP_L = Índice de Proporcionalidade do Poder Legislativo – imp_l = legislative/poderes</li>
+<li>IMP_J = Índice de Proporcionalidade do Poder Judiciário – imp_j = judicial/poderes</li>
 </ul>
 
 <style>
@@ -3219,7 +3226,7 @@ library(knitr)</pre>
 <pre class = 'prettyprint lang-r'>state_const &lt;- read_excel(&quot;state_const.xlsx&quot;)
 States_and_Abbreviations &lt;- read_xlsx(&quot;States and Abbreviations.xlsx&quot;)</pre>
 
-</article></slide><slide class=""><hgroup><h2>Manipulando das bases</h2></hgroup><article  id="manipulando-das-bases">
+</article></slide><slide class=""><hgroup><h2>Criando o Índice (IMP)</h2></hgroup><article  id="criando-o-índice-imp">
 
 <pre class = 'prettyprint lang-r'>constituicoes_poderes &lt;- state_const %&gt;% ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 

@@ -1,10 +1,8 @@
 ---
-title: "Lista 4: Métodos Quantitativos - IPOL"
+title: 'Lista 4 - Métodos Quantitativos IPOL/UnB'
 author: "Amanda Lopes; Ana Vaz; Bárbara Maia; Isabel Eirado"
 date: "03/12/2020"
-output: 
-  ioslides_presentation:
-    widescreen: TRUE
+output: ioslides_presentation
 ---
 
 ## A Base de Dados: U.S. State Constitutions Dataset
@@ -24,17 +22,25 @@ body {
 text-align: justify}
 </style>
 
-# Criação do índice e justificativa teórica
+# Legendas e justificativa teórica
 
-## Criando um índice 
+## Legendas para criação do índice 
 Legendas do índice para entender a mudança de foco e predominância do texto constitucional ligado a cada uma das categorias
+
+- Executive = quantidade de palavras destinada à categoria "Executive" em cada constituição
+- Legislative = quantidade de palavras destinada à categoria "Legislative" em cada constituição
+- Judicial = quantidade de palavras destinada à categoria "Judicial" em cada constituição
+- Poderes = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição
+
+## Legendas para criação do índice
 
 - IMP = ÍNDICE DE PROPOCIONALIDADE DOS PODERES
 - IMP_E = Índice de Proporcionalidade do Poder Executivo
+-- imp_e = executive/poderes
 - IMP_L = Índice de Proporcionalidade do Poder Legislativo
+-- imp_l = legislative/poderes
 - IMP_J = Índice de Proporcionalidade do Poder Judiciário
-- executive = quantidade de palavras destinada à categoria "Executive" em cada constituição
-- powers = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição
+-- imp_j = judicial/poderes
 
 <style>
 body {
@@ -75,7 +81,7 @@ state_const <- read_excel("state_const.xlsx")
 States_and_Abbreviations <- read_xlsx("States and Abbreviations.xlsx")
 ```
 
-## Manipulando das bases
+## Criando o Índice (IMP)
 ```{r echo=TRUE, message=FALSE}
 constituicoes_poderes <- state_const %>% ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 
