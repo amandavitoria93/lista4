@@ -18,20 +18,41 @@ Respectivamente, tratam do texto que descreve as funções, procedimentos, poder
 
 # Criação do índice e justificativa teórica
 
-## Criando um índice 
-Legendas do índice para entender a mudança de foco e predominância do texto constitucional ligado a cada uma das categorias
 
-- IMP = ÍNDICE DE PROPOCIONALIDADE DOS PODERES
-- IMP_E = Índice de Proporcionalidade do Poder Executivo
-- IMP_L = Índice de Proporcionalidade do Poder Legislativo
-- IMP_J = Índice de Proporcionalidade do Poder Judiciário
+## Índice de Mudança Proporcional dos Poderes
+
+
+$$
+imp_e = executive/powers
+$$
+
+
+$$
+imp_l = legislative/powers
+$$
+
+
+$$
+imp_j = judicial/powers
+$$
+
+
+## Índice de Mudança Proporcional dos Poderes
+
+ONDE:
+
+- IMP = Índice de Mudança Proporcional dos Poderes
+- imp_e = Índice de Mudança Proporcional do Poder Executivo
+- imp_l = Índice de Mudança Proporcional do Poder Legislativo
+- imp_j = Índice de Mudança Proporcional do Poder Judiciário
 - executive = quantidade de palavras destinada à categoria "Executive" em cada constituição
 - powers = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição
 
-## Sobre o índice
-O Objetivo deste índice é fornecer uma proporção dedicada a cada uma das vertentes dos poderes em relação ao total dedicado aos três. Deste modo, espera-se observar se existe proporcionalidade entre eles, ou seja, se há um equilíbrio, necessário ao mecanismo de Checks and Balances, ou se a presença de cada um dos poderes nas constituições foi se alterando ao longo do tempo de forma desigual.
+## Sobre o Índice de Mudança Proporcional dos Poderes
 
-## Justificativa teórica para o índice
+O Objetivo deste índice é fornecer medida de porporção de cada um dos poderes em relação ao total dedicado aos três em cada constituição adotada ou emendada pelos 50 estados. Deste modo, espera-se observar se existe proporcionalidade entre eles, ou seja, se há um equilíbrio, necessário ao mecanismo de Checks and Balances, ou se a presença (aqui entendida como o número de palavras dedicadas a eles) de cada um dos poderes nas constituições foi se alterando ao longo do tempo de forma desigual.
+
+## Justificativa teórica 
 A literatura (CLOUSE, 2019) aponta que as primeiras constituições estaduais estadunidenses tendiam a focar nos ramos Legislativo e Exectuivo, enquanto as atuais se concentram em outras, como a de Justiça (CLOUSE, 2019). Conforme texto da autora: 
 "In general, the constitutions have become less structural documents, establishing fundamental law, and are now vehicles for actively promoting legislative laws and policy initiatives" (CLOUSE, 2019, p. 44).
 
@@ -52,16 +73,16 @@ state_const <- read_excel("state_const.xlsx")
 States_and_Abbreviations <- read_xlsx("States and Abbreviations.xlsx")
 ```
 
-## Manipulando das bases
+## Criação dos índices com as bases
 ```{r}
 constituicoes_poderes <- state_const %>% ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 
          total_words, legislative, executive, judicial) %>% ##selecionando as variáveis de interesse
   left_join(States_and_Abbreviations, constituicoes_poderes, by = "state") %>% ##criando uma nova coluna de abreviacoes a partir do data.frame States and Abbreviations
    mutate (poderes = (legislative + executive + judicial), ##criando uma nova coluna com os valores somados das categorias executivo, legislativo e judiciário
-          imp_l = (legislative/poderes), ##criando o índice de proporcionalidade do legislativo em relação à soma dos poderes
-          imp_e = (executive/poderes), ##criando o índice de proporcionalidade do executivo em relação à soma dos poderes
-          imp_j = (judicial/poderes)) ##criando o índice de proporcionalidade do judiciário em relação à soma dos poderes
+          imp_l = (legislative/poderes), ##criando o índice de mudança proporcional do legislativo em relação à soma dos poderes
+          imp_e = (executive/poderes), ##criando o índice de mudança proporcional do executivo em relação à soma dos poderes
+          imp_j = (judicial/poderes)) ##criando o índice de mudança proporcional do judiciário em relação à soma dos poderes
 
 ```
 
