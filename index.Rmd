@@ -1,20 +1,28 @@
 ---
-title: "Lista 4 - Métodos Quantitativos - IPOL"
+title: "Lista 4: Métodos Quantitativos - IPOL"
 author: "Amanda Lopes; Ana Vaz; Bárbara Maia; Isabel Eirado"
 date: "03/12/2020"
 output: 
   ioslides_presentation:
     widescreen: TRUE
-editor_options: 
-  chunk_output_type: inline
 ---
 
 ## A Base de Dados: U.S. State Constitutions Dataset
 O Banco de Dados **"US State Constitutions Dataset"**, criado por Julia Gervaise-Rubicam Clouse (CLOUSE, 2019), converte textos constitucionais (historicos e atuais) dos estados dos EUA para dados quantificáveis utilizando-se da categorização destes textos. O objetivo é analisar a evolução das ideias e prioridades políticas nos 50 estados do país, e analisar a mudança constitucional dos estados ao longo do tempo.
 
+<style>
+body {
+text-align: justify}
+</style>
+
 ## Analisando a Base
 O objetivo dessa análise é fazer uma exploração dos dados a partir de três variáveis: **Lesislative**, **Executive**, e **Judicial**. 
 Respectivamente, tratam do texto que descreve as funções, procedimentos, poderes e limitações da legislatura; do texto que descreve as funções, estrutura, poderes e limitações do Poder Executivo; e do texto que descreve as funções e poderes dos sistemas de tribunais estaduais e dos funcionários do Poder Judiciário (CLOUSE, 2019).
+
+<style>
+body {
+text-align: justify}
+</style>
 
 # Criação do índice e justificativa teórica
 
@@ -28,16 +36,31 @@ Legendas do índice para entender a mudança de foco e predominância do texto c
 - executive = quantidade de palavras destinada à categoria "Executive" em cada constituição
 - powers = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição
 
+<style>
+body {
+text-align: justify}
+</style>
+
 ## Sobre o índice
 O Objetivo deste índice é fornecer uma proporção dedicada a cada uma das vertentes dos poderes em relação ao total dedicado aos três. Deste modo, espera-se observar se existe proporcionalidade entre eles, ou seja, se há um equilíbrio, necessário ao mecanismo de Checks and Balances, ou se a presença de cada um dos poderes nas constituições foi se alterando ao longo do tempo de forma desigual.
+
+<style>
+body {
+text-align: justify}
+</style>
 
 ## Justificativa teórica para o índice
 A literatura (CLOUSE, 2019) aponta que as primeiras constituições estaduais estadunidenses tendiam a focar nos ramos Legislativo e Exectuivo, enquanto as atuais se concentram em outras, como a de Justiça (CLOUSE, 2019). Conforme texto da autora: 
 "In general, the constitutions have become less structural documents, establishing fundamental law, and are now vehicles for actively promoting legislative laws and policy initiatives" (CLOUSE, 2019, p. 44).
 
+<style>
+body {
+text-align: justify}
+</style>
+
 ## Instalando pacotes a serem utilizados para criação do índice
 
-```{r, strip.white=TRUE, message = FALSE}
+```{r echo=TRUE}
 library(tidyverse)
 library(readxl)
 library(magrittr)
@@ -47,13 +70,13 @@ library(knitr)
 ```
 
 ## Carregando as bases de dados: state_const (U.S. State Constitutions) e States and Abbreviations (abreviações dos estados norte-americanos)
-```{r}
+```{r echo=TRUE}
 state_const <- read_excel("state_const.xlsx")
 States_and_Abbreviations <- read_xlsx("States and Abbreviations.xlsx")
 ```
 
 ## Manipulando das bases
-```{r}
+```{r echo=TRUE, message=FALSE}
 constituicoes_poderes <- state_const %>% ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 
          total_words, legislative, executive, judicial) %>% ##selecionando as variáveis de interesse
@@ -66,7 +89,7 @@ constituicoes_poderes <- state_const %>% ##criando um novo data frame com as man
 ```
 
 ## TESTE DE CONFIANÇA - Alpha de Cronbach
-```{r}
+```{r, echo=TRUE}
 library(psych) #baixando o pacote psych
 
  tabela_para_alpha <- constituicoes_poderes %>% #criando um novo dataframe 
@@ -81,7 +104,7 @@ alpha1 <- psych::alpha(tabela_para_alpha, check.keys = TRUE)
 # Visualização dos dados
 
 ## GRÁFICO 1 - Poderes por ano constitucional
-```{r grafico 1, echo = FALSE, fig.height=5, fig.width=8}
+```{r grafico 1, echo = FALSE, fig.height=5, fig.width=8, fig.align= 'center'}
 constituicoes_poderes %>%
   ggplot(aes(x = constitution_year,
              y = poderes)) + #determinando os eixos x e y
@@ -91,7 +114,7 @@ constituicoes_poderes %>%
 
 ## GRÁFICO 2 - Índices Legislativo, Executivo e Judiciário por ano constitucional
 
-```{r echo=FALSE, fig.height=5, fig.width=10, message=FALSE}
+```{r echo=FALSE, fig.height=5, fig.width=10, message=FALSE, fig.align= 'center'}
 library(viridis) #incluindo pacote para outras opçõe de escalas de cores
 
 constituicoes_poderes_grafico5 <- constituicoes_poderes %>% 
@@ -114,7 +137,7 @@ constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, g
 ```
 
 ## GRÁFICO 3 - Poderes por ano constitucional separado por estado
-```{r grafico 5, echo=FALSE, fig.height=5, fig.width=10}
+```{r grafico 5, echo=FALSE, fig.height=5, fig.width=10, fig.align= 'center'}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
   geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
