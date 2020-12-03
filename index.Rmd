@@ -54,7 +54,7 @@ States_and_Abbreviations <- read_xlsx("States and Abbreviations.xlsx")
 ```
 
 ## Manipulando das bases
-```{r comment = '##'}
+```{r}
 constituicoes_poderes <- state_const %>% ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 
          total_words, legislative, executive, judicial) %>% ##selecionando as variáveis de interesse
@@ -71,8 +71,7 @@ constituicoes_poderes <- state_const %>% ##criando um novo data frame com as man
 library(psych) #baixando o pacote psych
 
 tabela_para_alpha <- constituicoes_poderes %>% #criando um novo objeto para o cálculo do alpha
-  select(imp_l, imp_e, imp_j) %>% #selecionadno as variáveis com os valores do índice 
-  psych::alpha(tabela_para_alpha, check.keys = TRUE) #aplicando a função alpha de Cronbach, já definida pelo pacote psych
+  select(imp_l, imp_e, imp_j)
 ```
 
   

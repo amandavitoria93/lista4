@@ -86,3 +86,17 @@ constituicoes_poderes %>%
        y = "Powers", x="Constitution_Year") +
   facet_wrap(~ abbreviation) + #separando por estado
   theme_classic() #deixando mais clean
+
+?source
+source
+
+library(babynames)# provide the dataset: a dataframe called babynames
+library(ggplot2)
+library(dplyr)
+library(hrbrthemes)
+library(viridis)
+
+babynames <- babynames
+don <- babynames %>% 
+  filter(name %in% c("Ashley", "Patricia", "Helen")) %>%
+  filter(sex=="F")
