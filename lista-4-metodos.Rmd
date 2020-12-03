@@ -2,7 +2,9 @@
 title: "Lista 4 - Métodos Quantitativos - IPOL"
 author: "Amanda Lopes; Ana Vaz; Bárbara Maia; Isabel Eirado"
 date: "02/12/2020"
-output: html_document
+output:
+  html_document:
+    df_print: paged
 fontsize: 12pt
 ---
 
