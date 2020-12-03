@@ -85,6 +85,11 @@ constituicoes_poderes <- state_const %>% ##criando um novo data frame com as man
           imp_j = (judicial/poderes)) ##criando o índice de mudança proporcional do judiciário em relação à soma dos poderes
 
 ```
+## Visualizando em tabela
+
+```{r}
+paged_table(constituicoes_poderes)
+```
 
 ## TESTE DE CONFIANÇA - Alpha de Cronbach
 ```{r}
