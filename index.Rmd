@@ -3,12 +3,13 @@ title: "Lista 4 - Métodos Quantitativos - IPOL"
 author: "Amanda Lopes; Ana Vaz; Bárbara Maia; Isabel Eirado"
 date: "03/12/2020"
 output: 
-  ioslides_presentation:
-    widescreen: TRUE
+  ioslides_presentation: 
+    widescreen: yes
+    smaller: yes
+    transition: slower
 editor_options: 
   chunk_output_type: inline
 ---
-
 ## A Base de Dados: U.S. State Constitutions Dataset
 O Banco de Dados **"US State Constitutions Dataset"**, criado por Julia Gervaise-Rubicam Clouse (CLOUSE, 2019), converte textos constitucionais (historicos e atuais) dos estados dos EUA para dados quantificáveis utilizando-se da categorização destes textos. O objetivo é analisar a evolução das ideias e prioridades políticas nos 50 estados do país, e analisar a mudança constitucional dos estados ao longo do tempo.
 
@@ -69,14 +70,15 @@ text-align: justify}
 
 
 ## Justificativa teórica 
+
 A literatura (CLOUSE, 2019) aponta que as primeiras constituições estaduais estadunidenses tendiam a focar nos ramos Legislativo e Exectuivo, enquanto as atuais se concentram em outras, como a de Justiça (CLOUSE, 2019). Conforme texto da autora: 
+
 "In general, the constitutions have become less structural documents, establishing fundamental law, and are now vehicles for actively promoting legislative laws and policy initiatives" (CLOUSE, 2019, p. 44).
 
 <style>
 body {
 text-align: justify}
 </style>
-
 
 ## Instalando pacotes a serem utilizados para criação do índice
 
@@ -96,7 +98,8 @@ state_const <- read_excel("state_const.xlsx")
 States_and_Abbreviations <- read_xlsx("States and Abbreviations.xlsx")
 ```
 
-## Criação dos índices com as bases
+## Criação dos índices com as bases {.smaller}
+
 ```{r}
 constituicoes_poderes <- state_const %>% ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 
@@ -108,6 +111,7 @@ constituicoes_poderes <- state_const %>% ##criando um novo data frame com as man
           imp_j = (judicial/poderes)) ##criando o índice de mudança proporcional do judiciário em relação à soma dos poderes
 
 ```
+
 ## Visualizando em tabela
 
 ```{r}
@@ -115,7 +119,7 @@ paged_table (constituicoes_poderes)
 
 ```
 
-## TESTE DE CONFIANÇA - Alpha de Cronbach
+## TESTE DE CONFIANÇA - Alpha de Cronbach {.smaller}
 ```{r}
 library(psych) #baixando o pacote psych
 
@@ -130,7 +134,7 @@ alpha1 <- psych::alpha(tabela_para_alpha, check.keys = TRUE)
   
 # Visualização dos dados
 
-## GRÁFICO 1 - Poderes por ano constitucional
+## GRÁFICO 1 - Poderes por ano constitucional {.smaller}
 ```{r only code 1, echo = TRUE, fig.show = "hide"}
 constituicoes_poderes %>%
   ggplot(aes(x = constitution_year,
@@ -148,7 +152,7 @@ constituicoes_poderes %>%
   theme_classic() #deixando clean
 ```
 
-## GRÁFICO 2 - IMPs por ano constitucional
+## GRÁFICO 2 - IMPs por ano constitucional {.smaller}
 
 ```{r only code 2, echo=TRUE, fig.show = "hide", message=FALSE}
 library(viridis) #incluindo pacote para outras opçõe de escalas de cores
@@ -196,7 +200,7 @@ constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, g
         axis.title.y = element_text(size = 10)) #determinando o tamanho das fontes dos labels
 ```
 
-## GRÁFICO 3 - Poderes por ano constitucional separado por estado
+## GRÁFICO 3 - Poderes por ano constitucional separado por estado {.smaller}
 ```{r only code 3, echo=TRUE, fig.show = "hide"}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
@@ -213,7 +217,7 @@ constituicoes_poderes %>%
         axis.title.y = element_text(size = 10)) #definindo o tamanho das fontes dos textos dos eixos
 ```
 ## GRÁFICO 3 - Poderes por ano constitucional separado por estado
-```{r gráfico 3, echo = FALSE, fig.height=5, fig.width=9}
+```{r, echo = FALSE, fig.height=5, fig.width=9}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
   geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
