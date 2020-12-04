@@ -4480,14 +4480,19 @@ States_and_Abbreviations &lt;- read_xlsx(&quot;States and Abbreviations.xlsx&quo
 
 </article></slide><slide class=""><hgroup><h2>Criação dos índices com as bases</h2></hgroup><article  class="smaller smaller" id="criação-dos-índices-com-as-bases">
 
-<pre class = 'prettyprint lang-r'>constituicoes_poderes &lt;- state_const %&gt;% ##criando um novo data frame com as manipulações
+<pre class = 'prettyprint lang-r'>constituicoes_poderes &lt;- state_const %&gt;% 
+  ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 
          total_words, legislative, executive, judicial) %&gt;% ##selecionando as variáveis de interesse
-  left_join(States_and_Abbreviations, constituicoes_poderes, by = &quot;state&quot;) %&gt;% ##criando uma nova coluna de abreviacoes a partir do data.frame States and Abbreviations
+  left_join(States_and_Abbreviations, constituicoes_poderes, by = &quot;state&quot;) %&gt;% 
+##criando uma nova coluna de abreviacoes a partir do data.frame States and Abbreviations
    mutate (poderes = (legislative + executive + judicial), ##criando uma nova coluna com os valores somados das categorias executivo, legislativo e judiciário
-          imp_l = (legislative/poderes), ##criando o índice de mudança proporcional do legislativo em relação à soma dos poderes
-          imp_e = (executive/poderes), ##criando o índice de mudança proporcional do executivo em relação à soma dos poderes
-          imp_j = (judicial/poderes)) ##criando o índice de mudança proporcional do judiciário em relação à soma dos poderes</pre>
+          imp_l = (legislative/poderes), 
+##criando o índice de mudança proporcional do legislativo em relação à soma dos poderes
+          imp_e = (executive/poderes), 
+##criando o índice de mudança proporcional do executivo em relação à soma dos poderes
+          imp_j = (judicial/poderes)) 
+##criando o índice de mudança proporcional do judiciário em relação à soma dos poderes</pre>
 
 </article></slide><slide class=""><hgroup><h2>Visualizando em tabela</h2></hgroup><article  class="smaller " id="visualizando-em-tabela">
 
@@ -4509,10 +4514,12 @@ States_and_Abbreviations &lt;- read_xlsx(&quot;States and Abbreviations.xlsx&quo
 ## 
 ##     %+%, alpha</pre>
 
-<pre class = 'prettyprint lang-r'> tabela_para_alpha &lt;- constituicoes_poderes %&gt;% #criando um novo dataframe 
-  select(imp_l, imp_e, imp_j) #selecionando as variáveis de interesse para medir a covariancia  
+<pre class = 'prettyprint lang-r'> tabela_para_alpha &lt;- constituicoes_poderes %&gt;% 
+#criando um novo dataframe 
+  select(imp_l, imp_e, imp_j) 
+#selecionando as variáveis de interesse para medir a covariancia  
  
-psych::alpha(tabela_para_alpha, check.keys = TRUE) #aplicando a função &quot;alpha&quot; do pacote psych (os dois pontos :: demonstram para o R qual é o pacote a retirar a função)</pre>
+psych::alpha(tabela_para_alpha, check.keys = TRUE) </pre>
 
 <pre >## Number of categories should be increased  in order to count frequencies.</pre>
 
@@ -4547,7 +4554,10 @@ psych::alpha(tabela_para_alpha, check.keys = TRUE) #aplicando a função &quot;a
 ## imp_e  203  0.81  0.80  0.56   0.64 0.31 0.102
 ## imp_j- 203  1.00  1.00  0.83   1.00 0.48 0.157</pre>
 
-<pre class = 'prettyprint lang-r'>alpha1 &lt;- psych::alpha(tabela_para_alpha, check.keys = TRUE)</pre>
+<pre class = 'prettyprint lang-r'>#aplicando a função &quot;alpha&quot; do pacote psych 
+##(os dois pontos :: demonstram para o R qual é o pacote a retirar a função)
+
+alpha1 &lt;- psych::alpha(tabela_para_alpha, check.keys = TRUE)</pre>
 
 <pre >## Number of categories should be increased  in order to count frequencies.</pre>
 
@@ -4567,7 +4577,8 @@ psych::alpha(tabela_para_alpha, check.keys = TRUE) #aplicando a função &quot;a
 <pre class = 'prettyprint lang-r'>constituicoes_poderes %&gt;%
   ggplot(aes(x = constitution_year,
              y = poderes)) + #determinando os eixos x e y
-  geom_point(aes(color = abbreviation)) + #determinando a cor por abreviacao/estado
+  geom_point(aes(color = abbreviation)) + 
+  #determinando a cor por abreviacao/estado
   theme_classic() #deixando clean</pre>
 
 </article></slide><slide class=""><hgroup><h2>GRÁFICO 1 - Poderes por ano constitucional</h2></hgroup><article  class="smaller " id="gráfico-1---poderes-por-ano-constitucional-1">
@@ -4576,25 +4587,36 @@ psych::alpha(tabela_para_alpha, check.keys = TRUE) #aplicando a função &quot;a
 
 </article></slide><slide class=""><hgroup><h2>GRÁFICO 2 - IMPs por ano constitucional</h2></hgroup><article  class="smaller smaller" id="gráfico-2---imps-por-ano-constitucional">
 
-<pre class = 'prettyprint lang-r'>library(viridis) #incluindo pacote para outras opçõe de escalas de cores
+<pre class = 'prettyprint lang-r'>library(viridis) 
+#incluindo pacote para outras opçõe de escalas de cores
 
 constituicoes_poderes_grafico5 &lt;- constituicoes_poderes %&gt;% 
 select(constitution_year, abbreviation, imp_l, imp_e, imp_j) %&gt;% #selecionando as variáveis de interesse
-  pivot_longer(cols=3:5, names_to = &quot;indices&quot;, values_to = &quot;valores&quot;) #pivotando os dados para poder plotar os 3 indices
+  pivot_longer(cols=3:5, names_to = &quot;indices&quot;, values_to = &quot;valores&quot;) 
+#pivotando os dados para poder plotar os 3 indices
  
-constituicoes_poderes_grafico5 %&gt;%ggplot(aes(x= constitution_year, y= valores, group=indices, color=indices)) + #determinando eixos x, y e as linhas do grafico para cada um dos indices
+constituicoes_poderes_grafico5 %&gt;%ggplot(aes(x= constitution_year, y= valores, group=indices, color=indices)) + 
+#determinando eixos x, y e as linhas do grafico para cada um dos indices
   geom_line() + #ordenando as observações a partir do eixo x
-  geom_point() + #inserindo pontos nas linhas do gráfico apra marcar as mudanças
-  facet_wrap(~ abbreviation) + #separando por estado
-  scale_color_viridis(discrete = TRUE, begin=0, end=0.8) + # definindo escala de cores das linhas dos gráficos e ajustando com begin e end para que a paleta de cores fiquem mais fortes e menos suaves
-  scale_y_continuous(breaks = c(0.00, 0.40, 0.80)) + #definindo as escalas do eixo y
-    theme_classic() + #tema clássico para ficar mais clean
+  geom_point() + 
+#inserindo pontos nas linhas do gráfico apra marcar as mudanças
+  facet_wrap(~ abbreviation) + 
+#separando por estado
+  scale_color_viridis(discrete = TRUE, begin=0, end=0.8) + 
+# definindo escala de cores das linhas dos gráficos e ajustando com begin e end para que a paleta de cores fiquem mais fortes e menos suaves
+  scale_y_continuous(breaks = c(0.00, 0.40, 0.80)) + 
+#definindo as escalas do eixo y
+    theme_classic() + 
+#tema clássico para ficar mais clean
     labs(title = &quot;Indices por ano constitucional e estado&quot;, #determinando os marcadores dos gráficos
        y = &quot;Valores dos indices&quot;, x=&quot;Ano da Constituição&quot;) +
-     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), #rotacionando o eixo x para melhorar a visualização das datas
+     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), 
+#rotacionando o eixo x para melhorar a visualização das datas
         axis.text.y = element_text(size = 6),
         axis.title.x = element_text(size = 10),
-        axis.title.y = element_text(size = 10)) #determinando o tamanho das fontes dos labels</pre>
+        axis.title.y = element_text(size = 10)) </pre>
+
+<pre class = 'prettyprint lang-r'>#determinando o tamanho das fontes dos labels</pre>
 
 </article></slide><slide class=""><hgroup><h2>GRÁFICO 2 - IMPs por ano constitucional</h2></hgroup><article  class="smaller " id="gráfico-2---imps-por-ano-constitucional-1">
 
@@ -4603,18 +4625,27 @@ constituicoes_poderes_grafico5 %&gt;%ggplot(aes(x= constitution_year, y= valores
 </article></slide><slide class=""><hgroup><h2>GRÁFICO 3 - Poderes por ano constitucional separado por estado</h2></hgroup><article  class="smaller smaller" id="gráfico-3---poderes-por-ano-constitucional-separado-por-estado">
 
 <pre class = 'prettyprint lang-r'>constituicoes_poderes %&gt;%
-  ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
-  geom_line(color = &quot;steelblue&quot;, size = 1) + #determinando a cor e tamanho da linha
-  geom_point(color = &quot;steelblue&quot;) + #determinando a cor do ponto
-  labs(title = &quot;Poderes pelo ano da Constituição&quot;, #determinando os labels
+  ggplot(aes(constitution_year, poderes)) + 
+#selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
+  geom_line(color = &quot;steelblue&quot;, size = 1) + 
+#determinando a cor e tamanho da linha
+  geom_point(color = &quot;steelblue&quot;) + 
+#determinando a cor do ponto
+  labs(title = &quot;Poderes pelo ano da Constituição&quot;, 
+#determinando os labels
        y = &quot;Poderes&quot;, x=&quot;Ano da Constituição&quot;) +
-  facet_wrap(~ abbreviation) + #separando por estado
-  scale_y_continuous(breaks = c(0, 7500, 15000)) + #definindo as escalas do eixo y 
+  facet_wrap(~ abbreviation) + 
+#separando por estado
+  scale_y_continuous(breaks = c(0, 7500, 15000)) + 
+#definindo as escalas do eixo y 
   theme_classic() +
-     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), #rotacionando o eixo x para melhorar a visualização das datas
+     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), 
+#rotacionando o eixo x para melhorar a visualização das datas
         axis.text.y = element_text(size = 6),
         axis.title.x = element_text(size = 10),
-        axis.title.y = element_text(size = 10)) #definindo o tamanho das fontes dos textos dos eixos</pre>
+        axis.title.y = element_text(size = 10)) </pre>
+
+<pre class = 'prettyprint lang-r'>#definindo o tamanho das fontes dos textos dos eixos</pre>
 
 </article></slide><slide class=""><hgroup><h2>GRÁFICO 3 - Poderes por ano constitucional separado por estado</h2></hgroup><article  class="smaller " id="gráfico-3---poderes-por-ano-constitucional-separado-por-estado-1">
 
