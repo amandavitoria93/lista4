@@ -3,12 +3,13 @@ title: "Lista 4 - Métodos Quantitativos - IPOL"
 author: "Amanda Lopes; Ana Vaz; Bárbara Maia; Isabel Eirado"
 date: "03/12/2020"
 output: 
-  ioslides_presentation:
-    widescreen: TRUE
+  ioslides_presentation: 
+    widescreen: yes
+    smaller: yes
+    transition: slower
 editor_options: 
   chunk_output_type: inline
 ---
-
 ## A Base de Dados: U.S. State Constitutions Dataset
 O Banco de Dados **"US State Constitutions Dataset"**, criado por Julia Gervaise-Rubicam Clouse (CLOUSE, 2019), converte textos constitucionais (historicos e atuais) dos estados dos EUA para dados quantificáveis utilizando-se da categorização destes textos. O objetivo é analisar a evolução das ideias e prioridades políticas nos 50 estados do país, e analisar a mudança constitucional dos estados ao longo do tempo.
 
@@ -55,7 +56,7 @@ ONDE:
 - imp_e = Índice de Mudança Proporcional do Poder Executivo
 - imp_l = Índice de Mudança Proporcional do Poder Legislativo
 - imp_j = Índice de Mudança Proporcional do Poder Judiciário
-- executive = quantidade de palavras destinada à categoria "Executive" em cada constituição
+- executive, legislative e judicial = quantidade de palavras destinada respectivamente às categorias "Executive", "Legislative" e "Judicial" em cada constituição
 - powers = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição
 
 ## Sobre o Índice de Mudança Proporcional dos Poderes
@@ -69,14 +70,15 @@ text-align: justify}
 
 
 ## Justificativa teórica 
+
 A literatura (CLOUSE, 2019) aponta que as primeiras constituições estaduais estadunidenses tendiam a focar nos ramos Legislativo e Exectuivo, enquanto as atuais se concentram em outras, como a de Justiça (CLOUSE, 2019). Conforme texto da autora: 
+
 "In general, the constitutions have become less structural documents, establishing fundamental law, and are now vehicles for actively promoting legislative laws and policy initiatives" (CLOUSE, 2019, p. 44).
 
 <style>
 body {
 text-align: justify}
 </style>
-
 
 ## Instalando pacotes a serem utilizados para criação do índice
 
@@ -96,7 +98,8 @@ state_const <- read_excel("state_const.xlsx")
 States_and_Abbreviations <- read_xlsx("States and Abbreviations.xlsx")
 ```
 
-## Criação dos índices com as bases
+## Criação dos índices com as bases {.smaller}
+
 ```{r}
 constituicoes_poderes <- state_const %>% ##criando um novo data frame com as manipulações
   select(state, constitution_year,current_constitution, 
@@ -108,6 +111,7 @@ constituicoes_poderes <- state_const %>% ##criando um novo data frame com as man
           imp_j = (judicial/poderes)) ##criando o índice de mudança proporcional do judiciário em relação à soma dos poderes
 
 ```
+
 ## Visualizando em tabela
 
 ```{r}
@@ -115,7 +119,7 @@ paged_table (constituicoes_poderes)
 
 ```
 
-## TESTE DE CONFIANÇA - Alpha de Cronbach
+## TESTE DE CONFIANÇA - Alpha de Cronbach {.smaller}
 ```{r}
 library(psych) #baixando o pacote psych
 
@@ -130,6 +134,15 @@ alpha1 <- psych::alpha(tabela_para_alpha, check.keys = TRUE)
   
 # Visualização dos dados
 
+## GRÁFICO 1 - Poderes por ano constitucional {.smaller}
+```{r only code 1, echo = TRUE, fig.show = "hide"}
+constituicoes_poderes %>%
+  ggplot(aes(x = constitution_year,
+             y = poderes)) + #determinando os eixos x e y
+  geom_point(aes(color = abbreviation)) + #determinando a cor por abreviacao/estado
+  theme_classic() #deixando clean
+```
+
 ## GRÁFICO 1 - Poderes por ano constitucional
 ```{r grafico 1, echo = FALSE, fig.height=5, fig.width=8}
 constituicoes_poderes %>%
@@ -137,6 +150,30 @@ constituicoes_poderes %>%
              y = poderes)) + #determinando os eixos x e y
   geom_point(aes(color = abbreviation)) + #determinando a cor por abreviacao/estado
   theme_classic() #deixando clean
+```
+
+## GRÁFICO 2 - IMPs por ano constitucional {.smaller}
+
+```{r only code 2, echo=TRUE, fig.show = "hide", message=FALSE}
+library(viridis) #incluindo pacote para outras opçõe de escalas de cores
+
+constituicoes_poderes_grafico5 <- constituicoes_poderes %>% 
+select(constitution_year, abbreviation, imp_l, imp_e, imp_j) %>% #selecionando as variáveis de interesse
+  pivot_longer(cols=3:5, names_to = "indices", values_to = "valores") #pivotando os dados para poder plotar os 3 indices
+ 
+constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, group=indices, color=indices)) + #determinando eixos x, y e as linhas do grafico para cada um dos indices
+  geom_line() + #ordenando as observações a partir do eixo x
+  geom_point() + #inserindo pontos nas linhas do gráfico apra marcar as mudanças
+  facet_wrap(~ abbreviation) + #separando por estado
+  scale_color_viridis(discrete = TRUE, begin=0, end=0.8) + # definindo escala de cores das linhas dos gráficos e ajustando com begin e end para que a paleta de cores fiquem mais fortes e menos suaves
+  scale_y_continuous(breaks = c(0.00, 0.40, 0.80)) + #definindo as escalas do eixo y
+    theme_classic() + #tema clássico para ficar mais clean
+    labs(title = "Indices por ano constitucional e estado", #determinando os marcadores dos gráficos
+       y = "Valores dos indices", x="Ano da Constituição") +
+     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), #rotacionando o eixo x para melhorar a visualização das datas
+        axis.text.y = element_text(size = 6),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10)) #determinando o tamanho das fontes dos labels
 ```
 
 ## GRÁFICO 2 - IMPs por ano constitucional
@@ -163,8 +200,24 @@ constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, g
         axis.title.y = element_text(size = 10)) #determinando o tamanho das fontes dos labels
 ```
 
+## GRÁFICO 3 - Poderes por ano constitucional separado por estado {.smaller}
+```{r only code 3, echo=TRUE, fig.show = "hide"}
+constituicoes_poderes %>%
+  ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
+  geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
+  geom_point(color = "steelblue") + #determinando a cor do ponto
+  labs(title = "Poderes pelo ano da Constituição", #determinando os labels
+       y = "Poderes", x="Ano da Constituição") +
+  facet_wrap(~ abbreviation) + #separando por estado
+  scale_y_continuous(breaks = c(0, 7500, 15000)) + #definindo as escalas do eixo y 
+  theme_classic() +
+     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), #rotacionando o eixo x para melhorar a visualização das datas
+        axis.text.y = element_text(size = 6),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10)) #definindo o tamanho das fontes dos textos dos eixos
+```
 ## GRÁFICO 3 - Poderes por ano constitucional separado por estado
-```{r grafico 5, echo=FALSE, fig.height=5, fig.width=9}
+```{r, echo = FALSE, fig.height=5, fig.width=9}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
   geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
