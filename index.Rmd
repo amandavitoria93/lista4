@@ -55,7 +55,7 @@ ONDE:
 - imp_e = Índice de Mudança Proporcional do Poder Executivo
 - imp_l = Índice de Mudança Proporcional do Poder Legislativo
 - imp_j = Índice de Mudança Proporcional do Poder Judiciário
-- executive = quantidade de palavras destinada à categoria "Executive" em cada constituição
+- executive, legislative e judicial = quantidade de palavras destinada respectivamente às categorias "Executive", "Legislative" e "Judicial" em cada constituição
 - powers = somatório das palavras destinadas aos três poderes - Executivo + Legislativo + Judiciário - em cada constituição
 
 ## Sobre o Índice de Mudança Proporcional dos Poderes
