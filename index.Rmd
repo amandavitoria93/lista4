@@ -139,7 +139,7 @@ constituicoes_poderes %>%
   theme_classic() #deixando clean
 ```
 
-## GRÁFICO 2 - Índices Legislativo, Executivo e Judiciário por ano constitucional
+## GRÁFICO 2 - IMPs por ano constitucional
 
 ```{r echo=FALSE, fig.height=5, fig.width=8, message=FALSE}
 library(viridis) #incluindo pacote para outras opçõe de escalas de cores
