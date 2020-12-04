@@ -197,7 +197,7 @@ constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, g
 ```
 
 ## GRÁFICO 3 - Poderes por ano constitucional separado por estado
-```{r only code 3, echo=FALSE, fig.height=5, fig.width=9}
+```{r only code 3, echo=TRUE, fig.show = "hide"}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
   geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
@@ -213,7 +213,7 @@ constituicoes_poderes %>%
         axis.title.y = element_text(size = 10)) #definindo o tamanho das fontes dos textos dos eixos
 ```
 ## GRÁFICO 3 - Poderes por ano constitucional separado por estado
-```{r grafico 3, echo = TRUE, fig.show = "hide"}
+```{r only code 3, echo = FALSE, fig.height=5, fig.width=9}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
   geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
