@@ -12,9 +12,19 @@ editor_options:
 ## A Base de Dados: U.S. State Constitutions Dataset
 O Banco de Dados **"US State Constitutions Dataset"**, criado por Julia Gervaise-Rubicam Clouse (CLOUSE, 2019), converte textos constitucionais (historicos e atuais) dos estados dos EUA para dados quantificáveis utilizando-se da categorização destes textos. O objetivo é analisar a evolução das ideias e prioridades políticas nos 50 estados do país, e analisar a mudança constitucional dos estados ao longo do tempo.
 
+<style>
+body {
+text-align: justify}
+</style>
+
 ## Analisando a Base
 O objetivo dessa análise é fazer uma exploração dos dados a partir de três variáveis: **Lesislative**, **Executive**, e **Judicial**. 
 Respectivamente, tratam do texto que descreve as funções, procedimentos, poderes e limitações da legislatura; do texto que descreve as funções, estrutura, poderes e limitações do Poder Executivo; e do texto que descreve as funções e poderes dos sistemas de tribunais estaduais e dos funcionários do Poder Judiciário (CLOUSE, 2019).
+
+<style>
+body {
+text-align: justify}
+</style>
 
 # Criação do índice e justificativa teórica
 
@@ -52,9 +62,19 @@ ONDE:
 
 O Objetivo deste índice é fornecer medida de porporção de cada um dos poderes em relação ao total dedicado aos três em cada constituição adotada ou emendada pelos 50 estados. Deste modo, espera-se observar se existe proporcionalidade entre eles, ou seja, se há um equilíbrio, necessário ao mecanismo de Checks and Balances, ou se a presença (aqui entendida como o número de palavras dedicadas a eles) de cada um dos poderes nas constituições foi se alterando ao longo do tempo de forma desigual.
 
+<style>
+body {
+text-align: justify}
+</style>
+
 ## Justificativa teórica 
 A literatura (CLOUSE, 2019) aponta que as primeiras constituições estaduais estadunidenses tendiam a focar nos ramos Legislativo e Exectuivo, enquanto as atuais se concentram em outras, como a de Justiça (CLOUSE, 2019). Conforme texto da autora: 
 "In general, the constitutions have become less structural documents, establishing fundamental law, and are now vehicles for actively promoting legislative laws and policy initiatives" (CLOUSE, 2019, p. 44).
+
+<style>
+body {
+text-align: justify}
+</style>
 
 ## Instalando pacotes a serem utilizados para criação do índice
 
