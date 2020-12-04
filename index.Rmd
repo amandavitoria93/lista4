@@ -132,13 +132,19 @@ library(psych) #baixando o pacote psych
 #criando um novo dataframe 
   select(imp_l, imp_e, imp_j) 
 #selecionando as variáveis de interesse para medir a covariancia  
- 
+```
+## TESTE DE CONFIANÇA - Alpha de Cronbach {.smaller}
+
+```{r, echo=TRUE, message = FALSE, warning= FALSE}
 psych::alpha(tabela_para_alpha, check.keys = TRUE) 
 #aplicando a função "alpha" do pacote psych 
 ##(os dois pontos :: demonstram para o R qual é o pacote a retirar a função)
-
+```
+## TESTE DE CONFIANÇA - Alpha de Cronbach {.smaller}
+```{r}
 alpha1 <- psych::alpha(tabela_para_alpha, check.keys = TRUE)
 ```
+
 
   
 # Visualização dos dados
