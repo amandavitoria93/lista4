@@ -131,12 +131,45 @@ alpha1 <- psych::alpha(tabela_para_alpha, check.keys = TRUE)
 # Visualização dos dados
 
 ## GRÁFICO 1 - Poderes por ano constitucional
+```{r only code 1, echo = TRUE, fig.show = "hide"}
+constituicoes_poderes %>%
+  ggplot(aes(x = constitution_year,
+             y = poderes)) + #determinando os eixos x e y
+  geom_point(aes(color = abbreviation)) + #determinando a cor por abreviacao/estado
+  theme_classic() #deixando clean
+```
+
+## GRÁFICO 1 - Poderes por ano constitucional
 ```{r grafico 1, echo = FALSE, fig.height=5, fig.width=8}
 constituicoes_poderes %>%
   ggplot(aes(x = constitution_year,
              y = poderes)) + #determinando os eixos x e y
   geom_point(aes(color = abbreviation)) + #determinando a cor por abreviacao/estado
   theme_classic() #deixando clean
+```
+
+## GRÁFICO 2 - IMPs por ano constitucional
+
+```{r only code 2, echo=TRUE, fig.show = "hide", message=FALSE}
+library(viridis) #incluindo pacote para outras opçõe de escalas de cores
+
+constituicoes_poderes_grafico5 <- constituicoes_poderes %>% 
+select(constitution_year, abbreviation, imp_l, imp_e, imp_j) %>% #selecionando as variáveis de interesse
+  pivot_longer(cols=3:5, names_to = "indices", values_to = "valores") #pivotando os dados para poder plotar os 3 indices
+ 
+constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, group=indices, color=indices)) + #determinando eixos x, y e as linhas do grafico para cada um dos indices
+  geom_line() + #ordenando as observações a partir do eixo x
+  geom_point() + #inserindo pontos nas linhas do gráfico apra marcar as mudanças
+  facet_wrap(~ abbreviation) + #separando por estado
+  scale_color_viridis(discrete = TRUE, begin=0, end=0.8) + # definindo escala de cores das linhas dos gráficos e ajustando com begin e end para que a paleta de cores fiquem mais fortes e menos suaves
+  scale_y_continuous(breaks = c(0.00, 0.40, 0.80)) + #definindo as escalas do eixo y
+    theme_classic() + #tema clássico para ficar mais clean
+    labs(title = "Indices por ano constitucional e estado", #determinando os marcadores dos gráficos
+       y = "Valores dos indices", x="Ano da Constituição") +
+     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), #rotacionando o eixo x para melhorar a visualização das datas
+        axis.text.y = element_text(size = 6),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10)) #determinando o tamanho das fontes dos labels
 ```
 
 ## GRÁFICO 2 - IMPs por ano constitucional
@@ -164,7 +197,23 @@ constituicoes_poderes_grafico5 %>%ggplot(aes(x= constitution_year, y= valores, g
 ```
 
 ## GRÁFICO 3 - Poderes por ano constitucional separado por estado
-```{r grafico 5, echo=FALSE, fig.height=5, fig.width=9}
+```{r only code 3, echo=FALSE, fig.height=5, fig.width=9}
+constituicoes_poderes %>%
+  ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
+  geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
+  geom_point(color = "steelblue") + #determinando a cor do ponto
+  labs(title = "Poderes pelo ano da Constituição", #determinando os labels
+       y = "Poderes", x="Ano da Constituição") +
+  facet_wrap(~ abbreviation) + #separando por estado
+  scale_y_continuous(breaks = c(0, 7500, 15000)) + #definindo as escalas do eixo y 
+  theme_classic() +
+     theme(axis.text.x = element_text(size = 6, angle=90, hjust=1), #rotacionando o eixo x para melhorar a visualização das datas
+        axis.text.y = element_text(size = 6),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10)) #definindo o tamanho das fontes dos textos dos eixos
+```
+## GRÁFICO 3 - Poderes por ano constitucional separado por estado
+```{r grafico 3, echo = TRUE, fig.show = "hide"}
 constituicoes_poderes %>%
   ggplot(aes(constitution_year, poderes)) + #selecionando os eixos ano da constituicao e da variavel de interesse (poderes)
   geom_line(color = "steelblue", size = 1) + #determinando a cor e tamanho da linha
